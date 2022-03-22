@@ -1,1 +1,1 @@
-export {auth} from './firebase-config'
+export { auth } from './firebase-config'
