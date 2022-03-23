@@ -7,10 +7,6 @@ interface ToastProps {
   message: string;
 }
 export const Toast = ({ setOpen, open, message }: ToastProps) => {
-  const handleClick = () => {
-    setOpen(true);
-  };
-
   const handleClose = (
     event: React.SyntheticEvent | Event,
     reason?: string
