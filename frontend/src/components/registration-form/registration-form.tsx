@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
+import Link from 'next/link';
+
 import { Box, Button, TextField } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
-
-import { useRouter } from 'next/router';
 
 import { useAuth } from '../../contexts';
 import { REQUIRED_FIELD } from '../../constants';
@@ -11,19 +11,18 @@ import { translateFirebaseErrorMessages } from '../../helpers';
 import { FirebaseErrorResponse } from '../../interface';
 import { Toast } from '../toast';
 
-const LoginForm = () => {
+const RegistrationForm = () => {
   const { handleSubmit, control, getValues } = useForm({
     shouldFocusError: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [firebaseError, setFirebaseError] = useState('');
   const [open, setOpen] = useState(false);
-  const { push } = useRouter();
-  const { currentUser } = useAuth();
+
   const onSubmit = () => {
     setIsSubmitting(true);
-    loginWithPasswordAndEmail(getValues().email, getValues().password)
-      .then((response: any) => push(`users/${currentUser?.uid}`))
+    registerAnAccount(getValues().email, getValues().password)
+      .then((response: any) => {})
       .catch((error: FirebaseErrorResponse) => {
         setOpen(true);
         setFirebaseError(translateFirebaseErrorMessages(error));
@@ -33,7 +32,7 @@ const LoginForm = () => {
       });
   };
 
-  const { loginWithPasswordAndEmail } = useAuth();
+  const { registerAnAccount } = useAuth();
 
   return (
     <Box style={{ paddingTop: '200px' }}>
@@ -71,7 +70,8 @@ const LoginForm = () => {
         <Button type="submit">Enviar</Button>
       </form>
       <Toast message={firebaseError} setOpen={setOpen} open={open} />
+      <Link href="/login">Já tem uma conta? Faça o login aqui o/</Link>
     </Box>
   );
 };
-export default LoginForm;
+export default RegistrationForm;
