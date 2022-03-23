@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/contexts/AuthContext.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/contexts/AuthContext.ts"],
   "exclude": ["node_modules"]
 }
