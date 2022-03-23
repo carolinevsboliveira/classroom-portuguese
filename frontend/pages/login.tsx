@@ -1,10 +1,7 @@
 import React from 'react'
-import { useAuth } from '../src/contexts'
+import { LoginForm } from '../src/components'
 const Login = () => {
-    const {currentUser} = useAuth()
-  return (
-      <h1>`The current user is ${currentUser}`</h1>
-  )
+   return( <LoginForm />)
 }
 
 export default Login
