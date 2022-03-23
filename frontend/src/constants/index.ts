@@ -1,0 +1,1 @@
+export {REQUIRED_FIELD} from './text-validation'
