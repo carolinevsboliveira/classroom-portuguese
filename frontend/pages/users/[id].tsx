@@ -3,11 +3,18 @@ import { useRouter } from 'next/router';
 import { useAuth } from '../../src/contexts';
 import { Navbar } from '../../src/components';
 const UserProfile = () => {
-  const { query } = useRouter();
-  const { currentUser } = useAuth();
+  const { query, push } = useRouter();
+  const { currentUser, logoutTheCurrentUser } = useAuth();
   //console.log(query.id, currentUser.uid);
-
-  return <Navbar />;
+  const handleLogoutTheCurrentUser = () => {
+    logoutTheCurrentUser().then(() => push('/login'));
+  };
+  return (
+    <Navbar
+      user={currentUser}
+      logoutTheCurrentUser={handleLogoutTheCurrentUser}
+    />
+  );
 };
 
 export default UserProfile;

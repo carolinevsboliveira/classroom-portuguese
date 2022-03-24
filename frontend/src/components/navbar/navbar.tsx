@@ -11,12 +11,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useAuth } from '../../contexts';
 import { useRouter } from 'next/router';
 
-const Navbar = () => {
-  const { logoutTheCurrentUser, currentUser } = useAuth();
-  const { push } = useRouter();
-  const handleLogoutClick = () => {
-    logoutTheCurrentUser().then(() => push('/login'));
-  };
+const Navbar = ({ user, logoutTheCurrentUser }: any) => {
+  console.log(user);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -33,7 +30,7 @@ const Navbar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             News
           </Typography>
-          <Button onClick={handleLogoutClick} color="inherit">
+          <Button onClick={logoutTheCurrentUser} color="inherit">
             Logout
           </Button>
         </Toolbar>
