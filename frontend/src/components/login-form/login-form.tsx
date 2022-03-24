@@ -8,8 +8,8 @@ import { useRouter } from 'next/router';
 import { useAuth } from '../../contexts';
 import { REQUIRED_FIELD } from '../../constants';
 import { translateFirebaseErrorMessages } from '../../helpers';
-import { FirebaseErrorResponse } from '../../interface';
 import { Toast } from '../toast';
+import { BackdropWithLoader } from '../backdrop-with-loader';
 
 const LoginForm = () => {
   const { handleSubmit, control, getValues } = useForm({
@@ -17,61 +17,91 @@ const LoginForm = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [firebaseError, setFirebaseError] = useState('');
-  const [open, setOpen] = useState(false);
+  const [openToast, setOpenToast] = useState(false);
   const { push } = useRouter();
-  const { currentUser } = useAuth();
-  const onSubmit = () => {
+  const { loginWithPasswordAndEmail, signInWithGooglePopup } = useAuth();
+
+  const redirectToUserPage = (id: string) => {
+    push(`users/${id}`);
+  };
+  const onSubmit = async () => {
     setIsSubmitting(true);
-    loginWithPasswordAndEmail(getValues().email, getValues().password)
-      .then((response: any) => push(`users/${currentUser?.uid}`))
-      .catch((error: FirebaseErrorResponse) => {
-        setOpen(true);
-        setFirebaseError(translateFirebaseErrorMessages(error));
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
+    try {
+      const data = await loginWithPasswordAndEmail(
+        getValues().email,
+        getValues().password
+      );
+      redirectToUserPage(data?.user.uid);
+      setIsSubmitting(false);
+    } catch (error) {
+      setOpenToast(true);
+      setFirebaseError(translateFirebaseErrorMessages(error));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const { loginWithPasswordAndEmail } = useAuth();
+  const handleLoginWithPop = async () => {
+    setIsSubmitting(true);
+    try {
+      const data = await signInWithGooglePopup();
+      redirectToUserPage(data?.user.uid);
+      setIsSubmitting(false);
+    } catch (error) {
+      setOpenToast(true);
+      setFirebaseError(translateFirebaseErrorMessages(error));
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
-    <Box style={{ paddingTop: '200px' }}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          name="email"
-          control={control}
-          render={({ field: { onChange, value }, fieldState: { error } }) => (
-            <TextField
-              type="email"
-              label="E-mail"
-              value={value}
-              onChange={onChange}
-              error={!!error}
-              helperText={error ? error.message : null}
-            />
-          )}
-          rules={{ required: REQUIRED_FIELD }}
+    <React.Fragment>
+      <BackdropWithLoader isLoanding={isSubmitting} />
+      <Box style={{ paddingTop: '200px' }}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <TextField
+                type="email"
+                label="E-mail"
+                value={value}
+                onChange={onChange}
+                error={!!error}
+                helperText={error ? error.message : null}
+              />
+            )}
+            rules={{ required: REQUIRED_FIELD }}
+          />
+          <Controller
+            name="password"
+            control={control}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <TextField
+                type="password"
+                label="Senha"
+                value={value}
+                onChange={onChange}
+                error={!!error}
+                helperText={error ? error.message : null}
+              />
+            )}
+            rules={{ required: REQUIRED_FIELD }}
+          />
+          <Button type="submit">Enviar</Button>
+          <Button variant="contained" onClick={handleLoginWithPop}>
+            Entrar com o Google
+          </Button>
+        </form>
+        <Toast
+          message={firebaseError}
+          setOpen={setOpenToast}
+          open={openToast}
         />
-        <Controller
-          name="password"
-          control={control}
-          render={({ field: { onChange, value }, fieldState: { error } }) => (
-            <TextField
-              type="password"
-              label="Senha"
-              value={value}
-              onChange={onChange}
-              error={!!error}
-              helperText={error ? error.message : null}
-            />
-          )}
-          rules={{ required: REQUIRED_FIELD }}
-        />
-        <Button type="submit">Enviar</Button>
-      </form>
-      <Toast message={firebaseError} setOpen={setOpen} open={open} />
-    </Box>
+      </Box>
+    </React.Fragment>
   );
 };
 export default LoginForm;
