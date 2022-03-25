@@ -5,7 +5,6 @@ import { Navbar } from '../../src/components';
 const UserProfile = () => {
   const { query, push } = useRouter();
   const { currentUser, logoutTheCurrentUser } = useAuth();
-  //console.log(query.id, currentUser.uid);
   const handleLogoutTheCurrentUser = () => {
     logoutTheCurrentUser().then(() => push('/login'));
   };

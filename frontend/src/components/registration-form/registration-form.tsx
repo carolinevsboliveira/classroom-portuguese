@@ -11,6 +11,8 @@ import { translateFirebaseErrorMessages } from '../../helpers';
 import { FirebaseErrorResponse } from '../../interface';
 import { Toast } from '../toast';
 
+import { client } from '../../client';
+
 const RegistrationForm = () => {
   const { handleSubmit, control, getValues } = useForm({
     shouldFocusError: false
@@ -19,17 +21,30 @@ const RegistrationForm = () => {
   const [firebaseError, setFirebaseError] = useState('');
   const [open, setOpen] = useState(false);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     setIsSubmitting(true);
-    registerAnAccount(getValues().email, getValues().password)
-      .then((response: any) => {})
-      .catch((error: FirebaseErrorResponse) => {
-        setOpen(true);
-        setFirebaseError(translateFirebaseErrorMessages(error));
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
+    try {
+      const response = await registerAnAccount(
+        getValues().email,
+        getValues().password
+      );
+      console.log(response);
+      localStorage.setItem('user', JSON.stringify(response?.user));
+    } catch (error) {
+    } finally {
+    }
+
+    // registerAnAccount(getValues().email, getValues().password)
+    //   .then((response: any) => {
+    //     console.log(response);
+    //   })
+    //   .catch((error: FirebaseErrorResponse) => {
+    //     setOpen(true);
+    //     setFirebaseError(translateFirebaseErrorMessages(error));
+    //   })
+    //   .finally(() => {
+    //     setIsSubmitting(false);
+    //   });
   };
 
   const { registerAnAccount } = useAuth();
@@ -37,6 +52,21 @@ const RegistrationForm = () => {
   return (
     <Box style={{ paddingTop: '200px' }}>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <Controller
+          name="userName"
+          control={control}
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <TextField
+              type="text"
+              label="Nome de usuário"
+              value={value}
+              onChange={onChange}
+              error={!!error}
+              helperText={error ? error.message : null}
+            />
+          )}
+          rules={{ required: REQUIRED_FIELD, minLength: 2 }}
+        />
         <Controller
           name="email"
           control={control}

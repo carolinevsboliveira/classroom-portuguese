@@ -22,7 +22,7 @@ const LoginForm = () => {
   const { loginWithPasswordAndEmail, signInWithGooglePopup } = useAuth();
 
   const redirectToUserPage = (id: string) => {
-    push(`users/${id}`);
+    push(`/classes`);
   };
   const onSubmit = async () => {
     setIsSubmitting(true);
@@ -32,6 +32,7 @@ const LoginForm = () => {
         getValues().password
       );
       redirectToUserPage(data?.user.uid);
+      console.log(data);
       setIsSubmitting(false);
     } catch (error) {
       setOpenToast(true);
