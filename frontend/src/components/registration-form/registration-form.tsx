@@ -37,7 +37,7 @@ const RegistrationForm = () => {
       const doc = {
         _id: uid,
         _type: 'user',
-        userName: getValues().userName,
+        userName: getValues().userName ? getValues().userName : '',
         image: photoURL
       };
       client.createIfNotExists(doc).then(() => push('/classes'));
