@@ -4,9 +4,22 @@ export default {
   type: 'document',
   fields: [
     {
+      name: 'title',
+      title: 'Title',
+      type: 'string'
+    },
+    {
       name: 'time',
       title: 'Time',
       type: 'datetime'
+    },
+    {
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: {
+        hotspot: true
+      }
     },
     {
       name: 'link',
@@ -23,11 +36,6 @@ export default {
       name: 'duration',
       title: 'Duration',
       type: 'number'
-    },
-    {
-      name: 'kind',
-      title: 'Kind',
-      type: 'string'
     }
   ]
 };
