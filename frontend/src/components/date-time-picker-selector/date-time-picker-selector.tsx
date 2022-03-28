@@ -8,7 +8,6 @@ export default function DateTimePickerSelector() {
   const [date, setDate] = useState<any>(null);
   //type MaterialUiPickersDate
   const { register, getValues, setValue } = useFormContext();
-  const value = getValues('fieldName') as Date;
 
   useEffect(() => {
     register('selectedDate');

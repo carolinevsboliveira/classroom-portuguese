@@ -10,6 +10,7 @@ import { REQUIRED_FIELD } from '../../constants';
 import { translateFirebaseErrorMessages } from '../../helpers';
 import { Toast } from '../toast';
 import { BackdropWithLoader } from '../backdrop-with-loader';
+import { client } from '../../client';
 
 const LoginForm = () => {
   const { handleSubmit, control, getValues } = useForm({
@@ -46,6 +47,14 @@ const LoginForm = () => {
     setIsSubmitting(true);
     try {
       const data = await signInWithGooglePopup();
+      const doc = {
+        _id: data?.user.uid,
+        _type: 'user',
+        userName: data?.user.displayName,
+        image: data?.user.photoURL
+      };
+      console.log(data);
+      client.createIfNotExists(doc).then(() => push('/classes'));
       redirectToUserPage(data?.user.uid);
       setIsSubmitting(false);
     } catch (error) {

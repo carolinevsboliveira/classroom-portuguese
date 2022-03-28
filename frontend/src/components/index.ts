@@ -1,3 +1,4 @@
+export { ClassForm } from './class-form';
 export { LoginForm } from './login-form';
 export { Toast } from './toast';
 export { RegistrationForm } from './registration-form';
