@@ -1,3 +1,4 @@
+export { ControlledTextField } from './controlledTextField';
 export { ClassForm } from './class-form';
 export { LoginForm } from './login-form';
 export { Toast } from './toast';

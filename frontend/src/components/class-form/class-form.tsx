@@ -1,11 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import {
-  InputLabel,
-  NativeSelect,
-  TextField,
-  FormControl
-} from '@mui/material';
-
 import { useForm, Controller, FormProvider } from 'react-hook-form';
 import { REQUIRED_FIELD } from '../../constants';
 import { DateTimePickerSelector } from '../date-time-picker-selector';
@@ -14,19 +7,20 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { FileInput } from './styles';
 import { client } from '../../client';
 import { teachers } from '../../utils';
-import { For } from 'react-extras';
+import { ControlledTextField } from '../controlledTextField';
+import ControlledSelect from '../controlled-select/controled-select';
 
 function ClassForm() {
-  const onSubmit = () => {
-    console.log('Hey there');
-  };
-  const [arrayList, setArrayList] = useState([]);
-
-  const fetchTeachers = async () => {
-    setArrayList(await client.fetch(teachers));
-  };
-
   const methods = useForm();
+
+  const [teacherArrayList, setTeacherArrayList] = useState([]);
+  const fetchTeachers = async () => {
+    setTeacherArrayList(await client.fetch(teachers));
+  };
+  const onSubmit = () => {
+    console.log(methods.getValues());
+  };
+
   useEffect(() => {
     fetchTeachers();
   }, []);
@@ -34,22 +28,14 @@ function ClassForm() {
   return (
     <React.Fragment>
       <FormProvider {...methods}>
-        <form>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
           <h1>Form de inscrever aulas</h1>
-          <Controller
+          <ControlledTextField
             name="title"
             control={methods.control}
-            render={({ field: { onChange, value }, fieldState: { error } }) => (
-              <TextField
-                type="text"
-                label="Título da aula"
-                value={value}
-                onChange={onChange}
-                error={!!error}
-                helperText={error ? error.message : null}
-              />
-            )}
-            rules={{ required: REQUIRED_FIELD, minLength: 2 }}
+            label="Titulo da aula"
+            required={REQUIRED_FIELD}
+            type="text"
           />
           <label htmlFor="icon-button-file">
             <Controller
@@ -75,57 +61,28 @@ function ClassForm() {
             />
           </label>
           <DateTimePickerSelector />
-          <Controller
+          <ControlledTextField
             name="link"
+            type="text"
+            label="Link do Google Meet"
             control={methods.control}
-            render={({ field: { onChange, value }, fieldState: { error } }) => (
-              <TextField
-                type="text"
-                label="Link do google meet"
-                value={value}
-                onChange={onChange}
-                error={!!error}
-                helperText={error ? error.message : null}
-              />
-            )}
-            rules={{ required: REQUIRED_FIELD, minLength: 2 }}
+            required={REQUIRED_FIELD}
           />
-          <Controller
+
+          <ControlledTextField
             name="duration"
             control={methods.control}
-            render={({ field: { onChange, value }, fieldState: { error } }) => (
-              <TextField
-                type="text"
-                label="Duração da aula (em minutos)"
-                value={value}
-                onChange={onChange}
-                error={!!error}
-                helperText={error ? error.message : null}
-              />
-            )}
-            rules={{ required: REQUIRED_FIELD, minLength: 2 }}
+            label="Duração da aula (em minutos)"
+            type="number"
+            required={REQUIRED_FIELD}
           />
-          <FormControl fullWidth>
-            <InputLabel variant="standard" htmlFor="uncontrolled-native">
-              Professor:
-            </InputLabel>
-
-            <NativeSelect
-              defaultValue={''}
-              inputProps={{
-                name: 'teacher'
-              }}
-            >
-              <For
-                of={arrayList}
-                render={(item, index) => (
-                  <option value={item._id} key={index}>
-                    {item.userName}
-                  </option>
-                )}
-              ></For>
-            </NativeSelect>
-          </FormControl>
+          <ControlledSelect
+            name="teacher"
+            items={teacherArrayList}
+            control={methods.control}
+            label="Professor"
+          />
+          <button type="submit">AQUI</button>
         </form>
       </FormProvider>
     </React.Fragment>
