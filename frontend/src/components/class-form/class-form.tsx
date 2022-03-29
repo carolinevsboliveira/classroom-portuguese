@@ -9,15 +9,29 @@ import { client } from '../../client';
 import { teachers } from '../../utils';
 import { ControlledTextField } from '../controlledTextField';
 import ControlledSelect from '../controlled-select/controled-select';
+import { v4 as uuidv4 } from 'uuid';
+import { BackdropWithLoader } from '../backdrop-with-loader';
 
 function ClassForm() {
   const methods = useForm();
 
   const [teacherArrayList, setTeacherArrayList] = useState([]);
+  const [currentImage, setCurrentImage] = useState(null);
+  const [isLoanding, setIsLoanding] = useState(false);
+
   const fetchTeachers = async () => {
     setTeacherArrayList(await client.fetch(teachers));
   };
+  const uploadFile = (e) => {};
   const onSubmit = () => {
+    const doc = {
+      _type: 'classroom',
+      _id: uuidv4(),
+      title: methods.getValues().title,
+      description: methods.getValues().description,
+      time: methods.getValues().selectedDate
+    };
+    client.createIfNotExists();
     console.log(methods.getValues());
   };
 
@@ -27,6 +41,7 @@ function ClassForm() {
 
   return (
     <React.Fragment>
+      <BackdropWithLoader isLoanding={isLoanding} />
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <h1>Form de inscrever aulas</h1>
@@ -37,30 +52,35 @@ function ClassForm() {
             required={REQUIRED_FIELD}
             type="text"
           />
+
+          <ControlledTextField
+            name="description"
+            type="text"
+            label="Descrição"
+            control={methods.control}
+            required={REQUIRED_FIELD}
+          />
+
           <label htmlFor="icon-button-file">
-            <Controller
-              name="classImage"
-              control={methods.control}
-              render={({ field: { onChange } }) => (
-                <React.Fragment>
-                  <FileInput
-                    id="icon-button-file"
-                    type="file"
-                    onChange={onChange}
-                    accept="image/*"
-                  />
-                  <IconButton
-                    color="primary"
-                    aria-label="upload picture"
-                    component="span"
-                  >
-                    <PhotoCamera />
-                  </IconButton>
-                </React.Fragment>
-              )}
-            />
+            <React.Fragment>
+              <FileInput
+                id="icon-button-file"
+                type="file"
+                onChange={uploadFile}
+                accept="image/*"
+              />
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="span"
+              >
+                <PhotoCamera />
+              </IconButton>
+            </React.Fragment>
           </label>
+
           <DateTimePickerSelector />
+
           <ControlledTextField
             name="link"
             type="text"
@@ -76,6 +96,7 @@ function ClassForm() {
             type="number"
             required={REQUIRED_FIELD}
           />
+
           <ControlledSelect
             name="teacher"
             items={teacherArrayList}

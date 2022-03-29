@@ -6,4 +6,5 @@ export interface ControlledTextFieldProps {
   control: Control<FieldValues, any>;
   required?: string;
   type: string;
+  multiline?: boolean;
 }
