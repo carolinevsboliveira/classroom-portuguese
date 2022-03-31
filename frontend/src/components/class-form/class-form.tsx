@@ -47,7 +47,6 @@ function ClassForm() {
       });
       setImageAsset(document);
       setIsLoading(false);
-      console.log(document);
     } catch (error) {
       setIsLoading(false);
       setIsError(true);
@@ -57,8 +56,10 @@ function ClassForm() {
   };
 
   const onSubmit = () => {
+    setIsLoading(true);
     const { title, link, duration, teacher, selectedDate } =
       methods.getValues();
+
     const doc = {
       _type: 'classroom',
       _id: uuid(),
@@ -80,6 +81,7 @@ function ClassForm() {
     };
 
     client.create(doc).then(() => {
+      setIsLoading(false);
       push('/success');
     });
   };
