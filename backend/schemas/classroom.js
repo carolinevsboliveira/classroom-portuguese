@@ -29,8 +29,7 @@ export default {
     {
       name: 'teacher',
       title: 'Teacher',
-      type: 'array',
-      of: [{ type: 'reference', to: { type: 'user' } }]
+      type: 'teacher'
     },
     {
       name: 'duration',

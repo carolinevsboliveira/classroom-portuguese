@@ -1,44 +1,32 @@
-import React from 'react';
-import { FormControl, InputLabel, NativeSelect } from '@mui/material';
-import { Controller } from 'react-hook-form';
-import { For } from 'react-extras';
+import { FormControl, MenuItem, TextField } from '@mui/material';
+import { useFormContext } from 'react-hook-form';
 import { ControlledSelectProps } from './interface';
 
-function ControlledSelect({
-  label,
-  items,
-  name,
-  control
-}: ControlledSelectProps) {
+const ControlledSelect = ({ name, items, label }: ControlledSelectProps) => {
+  const { register, setValue } = useFormContext();
   return (
-    <Controller
-      name="name"
-      control={control}
-      render={() => (
-        <FormControl>
-          <InputLabel variant="standard" htmlFor="uncontrolled-native">
-            {label}
-          </InputLabel>
-
-          <NativeSelect
-            defaultValue={''}
-            inputProps={{
-              name: name
-            }}
+    <FormControl>
+      <TextField
+        select
+        label={label}
+        inputProps={{
+          inputRef: (ref: HTMLInputElement) => {
+            if (!ref) return;
+            register(name, { value: ref.value });
+          }
+        }}
+      >
+        {(items ?? []).map((item, index) => (
+          <MenuItem
+            key={index}
+            value={item._id}
+            onClick={() => setValue(name, item._id)}
           >
-            <For
-              of={items ?? []}
-              render={(item, index) => (
-                <option value={item._id} key={index}>
-                  {item.userName}
-                </option>
-              )}
-            />
-          </NativeSelect>
-        </FormControl>
-      )}
-    ></Controller>
+            {item.userName}
+          </MenuItem>
+        ))}
+      </TextField>
+    </FormControl>
   );
-}
-
+};
 export default ControlledSelect;
