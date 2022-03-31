@@ -1,7 +1,8 @@
 import React from 'react';
+import { SucessAnimation } from '../src/components';
 
-const Sucess = () => {
-  return <div>Sucess</div>;
+const Success = () => {
+  return <SucessAnimation />;
 };
 
-export default Sucess;
+export default Success;
