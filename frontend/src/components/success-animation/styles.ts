@@ -9,4 +9,9 @@ const CenteredBox = styled.div`
   align-items: center;
 `;
 
-export { CenteredBox };
+const ButtonBox = styled.div`
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+`;
+export { CenteredBox, ButtonBox };
