@@ -19,17 +19,15 @@ const SucessAnimation = () => {
       <Stack spacing={2}>
         <Lottie options={defaultOptions} height="25rem" width="25rem" />
         <ButtonBox>
-          <Stack spacing={1}>
-            <Button onClick={() => back()} variant="contained">
-              Cadastrar nova aula
-            </Button>
-            <Button onClick={() => push('/')} variant="outlined">
-              Listagem das aulas
-            </Button>
-            <Button onClick={() => push('/')} variant="outlined">
-              Ir para página inicial
-            </Button>
-          </Stack>
+          <Button onClick={() => back()} variant="contained">
+            Cadastrar nova aula
+          </Button>
+          <Button onClick={() => push('/')} variant="outlined">
+            Listagem das aulas
+          </Button>
+          <Button onClick={() => push('/')} variant="outlined">
+            Ir para página inicial
+          </Button>
         </ButtonBox>
       </Stack>
     </CenteredBox>

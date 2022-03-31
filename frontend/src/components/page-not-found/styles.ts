@@ -8,13 +8,3 @@ const CenteredBox = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-const ButtonBox = styled.div`
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-`;
-export { CenteredBox, ButtonBox };
