@@ -10,6 +10,7 @@ import postedBy from './postedBy';
 import save from './save';
 import question from './question';
 import user from './user';
+import teacher from './teacher';
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -25,6 +26,7 @@ export default createSchema({
     postedBy,
     save,
     question,
-    user
+    user,
+    teacher
   ])
 });
