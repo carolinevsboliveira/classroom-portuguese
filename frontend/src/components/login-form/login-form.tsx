@@ -33,7 +33,6 @@ const LoginForm = () => {
         getValues().password
       );
       redirectToUserPage(data?.user.uid);
-      console.log(data);
       setIsSubmitting(false);
     } catch (error) {
       setOpenToast(true);
@@ -53,7 +52,6 @@ const LoginForm = () => {
         userName: data?.user.displayName,
         image: data?.user.photoURL
       };
-      console.log(data);
       client.createIfNotExists(doc).then(() => push('/classes'));
       redirectToUserPage(data?.user.uid);
       setIsSubmitting(false);

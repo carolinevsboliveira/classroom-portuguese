@@ -15,7 +15,7 @@ import {
 } from '../../components';
 
 import { Button, IconButton } from '@mui/material';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
+
 import { FileInput } from './styles';
 
 import { client } from '../../client';
@@ -42,17 +42,14 @@ function ClassForm() {
   const uploadFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
     const selectedFile = (e.currentTarget as HTMLInputElement).files[0];
-    console.log(selectedFile);
     try {
       const document = await client.assets.upload('file', selectedFile, {
         contentType: selectedFile.type,
         filename: selectedFile.name
       });
 
-      console.log(document);
       setFileAsset(document);
     } catch (error) {
-      console.log(error);
       setIsLoading(false);
       setIsError(true);
     } finally {

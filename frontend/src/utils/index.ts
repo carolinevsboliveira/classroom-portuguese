@@ -1,2 +1,2 @@
 export { auth } from './firebase-config';
-export { teachers } from './sanity-querys';
+export { teachers, classesQuery, fileUrlQuery } from './sanity-querys';

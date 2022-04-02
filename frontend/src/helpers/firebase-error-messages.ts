@@ -2,7 +2,6 @@ import { FirebaseErrorResponse } from '../interface';
 export const translateFirebaseErrorMessages = (
   error: FirebaseErrorResponse
 ) => {
-  console.log(error.message);
   if (error.message?.includes('auth/email-already-exists')) {
     return 'E-mail já utilizado.';
   }

@@ -1,4 +1,6 @@
 export { BackdropWithLoader } from './backdrop-with-loader';
+export { ClassCard } from './class-card';
+export { ClassList } from './class-list';
 export { ControlledTextField } from './controlledTextField';
 export { ControlledSelect } from './controlled-select';
 export { ClassForm } from './class-form';
