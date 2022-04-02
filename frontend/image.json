@@ -1,0 +1,81 @@
+{
+  "_createdAt": "2022-03-30T19:01:54Z",
+  "_id": "image-461cd5a0e8c59bae4c8812e6494fbc81e0e0df1e-2121x1414-jpg",
+  "_rev": "KOuwTsQE1Q1rVARjwjX1FQ",
+  "_type": "sanity.imageAsset",
+  "_updatedAt": "2022-03-30T19:01:54Z",
+  "assetId": "461cd5a0e8c59bae4c8812e6494fbc81e0e0df1e",
+  "extension": "jpg",
+  "metadata": {
+    "_type": "sanity.imageMetadata",
+    "blurHash": "VTHKhBxbIDNF-5~pxtW;oJS4%gxuoys.R.%2xus:sojb",
+    "dimensions": {
+      "_type": "sanity.imageDimensions",
+      "aspectRatio": 1.5,
+      "height": 1414,
+      "width": 2121
+    },
+    "hasAlpha": false,
+    "isOpaque": true,
+    "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAANABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAUHBAb/xAAjEAABAwQCAQUAAAAAAAAAAAACAQMEAAUGERIhMQcUUXGB/8QAFgEBAQEAAAAAAAAAAAAAAAAABAAF/8QAIBEAAQMCBwAAAAAAAAAAAAAAAQACAwTBEyEyQVGBkf/aAAwDAQACEQMRAD8Az2z1KucuFuW1HExdRek15+aaZjkYDcY0T2rToPAJKJdJv7qKxJDiC8CLpOQrXQ5dcHyyiOm+m2W9J+JQpBp7stSqaI3uDdjZNbxKGVcnyasVtIRLiqqWu0oqcZFKeO8SCQyHZeEWioiUnJw8TcKPhf/Z",
+    "palette": {
+      "_type": "sanity.imagePalette",
+      "darkMuted": {
+        "_type": "sanity.imagePaletteSwatch",
+        "background": "#5b4b32",
+        "foreground": "#fff",
+        "population": 3.76,
+        "title": "#fff"
+      },
+      "darkVibrant": {
+        "_type": "sanity.imagePaletteSwatch",
+        "background": "#7d6310",
+        "foreground": "#fff",
+        "population": 0.09,
+        "title": "#fff"
+      },
+      "dominant": {
+        "_type": "sanity.imagePaletteSwatch",
+        "background": "#a8132b",
+        "foreground": "#fff",
+        "population": 6.45,
+        "title": "#fff"
+      },
+      "lightMuted": {
+        "_type": "sanity.imagePaletteSwatch",
+        "background": "#d7cabf",
+        "foreground": "#000",
+        "population": 5.29,
+        "title": "#000"
+      },
+      "lightVibrant": {
+        "_type": "sanity.imagePaletteSwatch",
+        "background": "#f2cf6b",
+        "foreground": "#000",
+        "population": 2.76,
+        "title": "#000"
+      },
+      "muted": {
+        "_type": "sanity.imagePaletteSwatch",
+        "background": "#a89477",
+        "foreground": "#000",
+        "population": 6.06,
+        "title": "#fff"
+      },
+      "vibrant": {
+        "_type": "sanity.imagePaletteSwatch",
+        "background": "#a8132b",
+        "foreground": "#fff",
+        "population": 6.45,
+        "title": "#fff"
+      }
+    }
+  },
+  "mimeType": "image/jpeg",
+  "originalFilename": "old-books-arranged-on-shelf-royalty-free-image-1572384534.jpg",
+  "path": "images/t27fh7on/production/461cd5a0e8c59bae4c8812e6494fbc81e0e0df1e-2121x1414.jpg",
+  "sha1hash": "461cd5a0e8c59bae4c8812e6494fbc81e0e0df1e",
+  "size": 540228,
+  "uploadId": "xdp5k6tHJ1za1qfLGVH9u69OypwbIMYz",
+  "url": "https://cdn.sanity.io/images/t27fh7on/production/461cd5a0e8c59bae4c8812e6494fbc81e0e0df1e-2121x1414.jpg"
+}

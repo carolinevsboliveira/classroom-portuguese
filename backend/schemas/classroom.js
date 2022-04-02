@@ -22,6 +22,15 @@ export default {
       }
     },
     {
+      name: 'file',
+      title: 'File',
+      type: 'file',
+      options: {
+        allowedMimeTypes: ['application/pdf']
+      }
+    },
+
+    {
       name: 'link',
       title: 'Link',
       type: 'string'

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { SanityImageAssetDocument } from '@sanity/client';
+import { SanityAssetDocument, SanityImageAssetDocument } from '@sanity/client';
 
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
 import { useForm, Controller, FormProvider } from 'react-hook-form';
-import { REQUIRED_FIELD } from '../../constants';
+import { REQUIRED_FIELD, DEFAULT_IMAGE, DEFAULT_PDF } from '../../constants';
 import {
   DateTimePickerSelector,
   ControlledSelect,
@@ -14,7 +14,7 @@ import {
   ControlledTextField
 } from '../../components';
 
-import { IconButton } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { FileInput } from './styles';
 
@@ -22,14 +22,15 @@ import { client } from '../../client';
 import { teachers } from '../../utils';
 import { uuid } from 'uuidv4';
 import { useRouter } from 'next/router';
+import { FileCopy } from '@mui/icons-material';
 
 dayjs.extend(utc);
-const DEFAULT_IMAGE =
-  'image-461cd5a0e8c59bae4c8812e6494fbc81e0e0df1e-2121x1414-jpg';
+
 function ClassForm() {
   const methods = useForm();
 
   const [imageAsset, setImageAsset] = useState<SanityImageAssetDocument>();
+  const [fileAsset, setFileAsset] = useState<SanityAssetDocument>();
   const [teacherArrayList, setTeacherArrayList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -37,24 +38,27 @@ function ClassForm() {
   const fetchTeachers = async () => {
     setTeacherArrayList(await client.fetch(teachers));
   };
-  const uploadImage = async (e?: React.ChangeEvent<HTMLInputElement>) => {
+
+  const uploadFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
-    const selectedImage = (e.target as HTMLInputElement).files[0];
+    const selectedFile = (e.currentTarget as HTMLInputElement).files[0];
+    console.log(selectedFile);
     try {
-      const document = await client.assets.upload('image', selectedImage, {
-        contentType: selectedImage.type,
-        filename: selectedImage.name
+      const document = await client.assets.upload('file', selectedFile, {
+        contentType: selectedFile.type,
+        filename: selectedFile.name
       });
-      setImageAsset(document);
-      setIsLoading(false);
+
+      console.log(document);
+      setFileAsset(document);
     } catch (error) {
+      console.log(error);
       setIsLoading(false);
       setIsError(true);
     } finally {
       setIsLoading(false);
     }
   };
-
   const onSubmit = () => {
     setIsLoading(true);
     const { title, link, duration, teacher, selectedDate } =
@@ -71,6 +75,13 @@ function ClassForm() {
         asset: {
           _type: 'reference',
           _ref: imageAsset?._id || DEFAULT_IMAGE
+        }
+      },
+      file: {
+        _type: 'file',
+        asset: {
+          _type: 'reference',
+          _ref: fileAsset?._id || DEFAULT_PDF
         }
       },
       teacher: {
@@ -103,29 +114,6 @@ function ClassForm() {
             required={REQUIRED_FIELD}
             type="text"
           />
-          <label htmlFor="icon-button-file">
-            <Controller
-              name="classImage"
-              control={methods.control}
-              render={() => (
-                <React.Fragment>
-                  <FileInput
-                    id="icon-button-file"
-                    type="file"
-                    onChange={uploadImage}
-                    accept="image/*"
-                  />
-                  <IconButton
-                    color="primary"
-                    aria-label="upload picture"
-                    component="span"
-                  >
-                    <PhotoCamera />
-                  </IconButton>
-                </React.Fragment>
-              )}
-            />
-          </label>
           <DateTimePickerSelector />
           <ControlledTextField
             name="link"
@@ -134,7 +122,6 @@ function ClassForm() {
             control={methods.control}
             required={REQUIRED_FIELD}
           />
-
           <ControlledTextField
             name="duration"
             control={methods.control}
@@ -147,13 +134,36 @@ function ClassForm() {
             items={teacherArrayList}
             label="Professor"
           />
+          <label htmlFor="icon-button-file">
+            <Controller
+              name="file"
+              control={methods.control}
+              render={() => (
+                <React.Fragment>
+                  <FileInput
+                    id="icon-button-file"
+                    type="file"
+                    onChange={uploadFile}
+                    accept=".pdf"
+                  />
+                  <IconButton
+                    color="primary"
+                    aria-label="upload picture"
+                    component="span"
+                  >
+                    <FileCopy />
+                  </IconButton>
+                </React.Fragment>
+              )}
+            />
+          </label>
           <button type="submit">AQUI</button>
         </form>
       </FormProvider>
       <Toast
         open={isError}
         setOpen={setIsError}
-        message="Falha ao realizar o upload da imagem."
+        message="Falha ao realizar o upload."
       />
     </React.Fragment>
   );
