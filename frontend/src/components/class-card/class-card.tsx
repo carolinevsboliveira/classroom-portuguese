@@ -14,8 +14,8 @@ import { client, urlFor } from '../../client';
 import { currentTeacherUserName, fileUrlQuery } from '../../utils';
 import { red } from '@mui/material/colors';
 import dayjs from 'dayjs';
-import { useQueries, useQuery } from 'react-query';
-import { Choose, If } from 'react-extras';
+import { useQueries } from 'react-query';
+import { Choose } from 'react-extras';
 
 const ClassCard = (classItem: any) => {
   const {
@@ -36,6 +36,7 @@ const ClassCard = (classItem: any) => {
 
   const { isFetched: isTeacherNameFetched, data: currentTeacher } = results[0];
   const { isFetched: isFileFetched, data: classFile } = results[1];
+  const linkUrl = new URL(link).href;
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -64,10 +65,15 @@ const ClassCard = (classItem: any) => {
         <Typography variant="body2" color="text.secondary">
           {description}
         </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Duração: {duration / 60} hora(s)
+        </Typography>
       </CardContent>
       <CardActions>
         <Button size="small">
-          <a href={link}>Link da aula</a>
+          <a href={linkUrl} target="_blank">
+            Link da aula
+          </a>
         </Button>
         <Button size="small">
           <a
