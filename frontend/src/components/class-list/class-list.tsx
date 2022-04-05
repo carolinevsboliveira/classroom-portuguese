@@ -19,7 +19,6 @@ const ClassList = () => {
   };
 
   const { isLoading, data, isFetched } = useQuery('classes', fetchClasses);
-  console.log(data);
   return (
     <React.Fragment>
       <Choose>

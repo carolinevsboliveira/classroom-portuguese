@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Card,
   Button,
@@ -8,38 +8,34 @@ import {
   Typography,
   CardHeader,
   Avatar,
-  IconButton,
-  Stack,
   Skeleton
 } from '@mui/material';
 import { client, urlFor } from '../../client';
-import { currentTeacherUserName } from '../../utils';
+import { currentTeacherUserName, fileUrlQuery } from '../../utils';
 import { red } from '@mui/material/colors';
 import dayjs from 'dayjs';
-import { useQuery } from 'react-query';
-import { Choose } from 'react-extras';
+import { useQueries, useQuery } from 'react-query';
+import { Choose, If } from 'react-extras';
 
 const ClassCard = (classItem: any) => {
   const {
-    classItem: {
-      image,
-      link,
-      time,
-      title,
-      duration,
-      teacher,
-      description,
-      file
-    }
+    classItem: { image, link, time, title, duration, teacher, description, _id }
   } = classItem;
   const fetchTeacherName = async () => {
     return await client.fetch(currentTeacherUserName(teacher._ref));
   };
 
-  const { data: currentTeacher, isFetched: isTeacherNameFetched } = useQuery(
-    'currentTeacher',
-    fetchTeacherName
-  );
+  const fileArchive = async () => {
+    return await client.fetch(fileUrlQuery(_id));
+  };
+
+  const results = useQueries([
+    { queryKey: ['teacherName', 1], queryFn: fetchTeacherName },
+    { queryKey: ['fileArchive', 2], queryFn: fileArchive }
+  ]);
+
+  const { isFetched: isTeacherNameFetched, data: currentTeacher } = results[0];
+  const { isFetched: isFileFetched, data: classFile } = results[1];
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -73,7 +69,14 @@ const ClassCard = (classItem: any) => {
         <Button size="small">
           <a href={link}>Link da aula</a>
         </Button>
-        <Button size="small">{/* <a href={}>Material de Apoio</a> */}</Button>
+        <Button size="small">
+          <a
+            href={isFileFetched ? classFile[0].file.asset.url : ''}
+            target="_blank"
+          >
+            Material de Apoio
+          </a>
+        </Button>
       </CardActions>
     </Card>
   );
