@@ -7,40 +7,30 @@ import {
   CardMedia,
   Typography
 } from '@mui/material';
-import { client } from '../../client';
+import { client, urlFor } from '../../client';
 import { classesQuery } from '../../utils';
-
-export default function ClassCard() {
+import { ClassCard } from '../class-card';
+import { BackdropWithLoader } from '../backdrop-with-loader';
+import { useQuery } from 'react-query';
+import { Choose, For } from 'react-extras';
+const ClassList = () => {
   const fetchClasses = async () => {
-    return setClasses(await client.fetch(classesQuery));
+    return await client.fetch(classesQuery);
   };
-  const [classes, setClasses] = useState<Array<any>>();
 
-  useEffect(() => {
-    fetchClasses();
-  }, []);
-
+  const { isLoading, data, isFetched } = useQuery('classes', fetchClasses);
+  console.log(data);
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        component="img"
-        alt="green iguana"
-        height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Lizard
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
+    <React.Fragment>
+      <Choose>
+        <Choose.When condition={isLoading}>
+          <BackdropWithLoader isLoanding={isLoading} />
+        </Choose.When>
+        <Choose.When condition={isFetched && Boolean(data)}>
+          <For of={data} render={(item) => <ClassCard classItem={item} />} />
+        </Choose.When>
+      </Choose>
+    </React.Fragment>
   );
-}
+};
+export default ClassList;

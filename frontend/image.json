@@ -79,3 +79,37 @@
   "uploadId": "xdp5k6tHJ1za1qfLGVH9u69OypwbIMYz",
   "url": "https://cdn.sanity.io/images/t27fh7on/production/461cd5a0e8c59bae4c8812e6494fbc81e0e0df1e-2121x1414.jpg"
 }
+
+
+
+0: Object { _createdAt: "2022-04-02T20:42:57Z", _id: "65c6f356-3812-43ea-a71e-2a94c61fcd5a", _rev: "KOuwTsQE1Q1rVARjwu6cBD", … }
+​​
+_createdAt: "2022-04-02T20:42:57Z"
+​​
+_id: "65c6f356-3812-43ea-a71e-2a94c61fcd5a"
+​​
+_rev: "KOuwTsQE1Q1rVARjwu6cBD"
+​​
+_type: "classroom"
+​​
+_updatedAt: "2022-04-02T20:42:57Z"
+​​
+duration: 120
+​​
+file: Object { _type: "file", asset: {…} }
+​​​
+_type: "file"
+​​​
+asset: Object { _ref: "file-8d758653244b7ca6a1cc4a978ab02a220adf4cc7-pdf", _type: "reference" }
+​​​
+<prototype>: Object { … }
+​​
+image: Object { _type: "image", asset: {…} }
+​​
+link: "qwdqwdqwd"
+​​
+teacher: Object { _ref: "ym42Wj6TNqXLEmOSlugwOREshOC2", _type: "teacher" }
+​​
+time: "2022-04-02T20:41:48+00:00"
+​​
+title: "qwdqwdq"

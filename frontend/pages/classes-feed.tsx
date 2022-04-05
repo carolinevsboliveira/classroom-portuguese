@@ -1,8 +1,13 @@
 import React from 'react';
-import { ClassCard } from '../src/components';
-
+import { ClassCard, ClassList } from '../src/components';
+import { QueryClient, QueryClientProvider } from 'react-query';
 function ClassFeed() {
-  return <ClassCard />;
+  const queryClient = new QueryClient();
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ClassList />
+    </QueryClientProvider>
+  );
 }
 
 export default ClassFeed;

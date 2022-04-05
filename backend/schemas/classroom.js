@@ -41,6 +41,11 @@ export default {
       type: 'teacher'
     },
     {
+      name: 'description',
+      title: 'Description',
+      type: 'string'
+    },
+    {
       name: 'duration',
       title: 'Duration',
       type: 'number'

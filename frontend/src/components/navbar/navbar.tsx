@@ -12,8 +12,6 @@ import { useAuth } from '../../contexts';
 import { useRouter } from 'next/router';
 
 const Navbar = ({ user, logoutTheCurrentUser }: any) => {
-  console.log(user);
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">

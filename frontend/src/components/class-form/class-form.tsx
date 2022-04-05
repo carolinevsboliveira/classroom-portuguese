@@ -58,7 +58,7 @@ function ClassForm() {
   };
   const onSubmit = () => {
     setIsLoading(true);
-    const { title, link, duration, teacher, selectedDate } =
+    const { title, link, duration, teacher, selectedDate, description } =
       methods.getValues();
 
     const doc = {
@@ -85,6 +85,7 @@ function ClassForm() {
         _type: 'teacher',
         _ref: teacher
       },
+      description,
       time: dayjs(selectedDate['$d']).utc().format()
     };
 
@@ -125,6 +126,14 @@ function ClassForm() {
             label="Duração da aula (em minutos)"
             type="number"
             required={REQUIRED_FIELD}
+          />
+          <ControlledTextField
+            name="description"
+            control={methods.control}
+            label="Descrição"
+            required={REQUIRED_FIELD}
+            type="text"
+            multiline
           />
           <ControlledSelect
             name="teacher"

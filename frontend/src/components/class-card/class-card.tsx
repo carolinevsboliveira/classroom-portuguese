@@ -5,39 +5,77 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Typography
+  Typography,
+  CardHeader,
+  Avatar,
+  IconButton,
+  Stack,
+  Skeleton
 } from '@mui/material';
 import { client, urlFor } from '../../client';
-import { classesQuery } from '../../utils';
+import { currentTeacherUserName } from '../../utils';
+import { red } from '@mui/material/colors';
+import dayjs from 'dayjs';
+import { useQuery } from 'react-query';
+import { Choose } from 'react-extras';
 
-const ClassCard = ({class} : any) =>  {
-  const fetchClasses = async () => {
-    return setClasses(await client.fetch(classesQuery));
+const ClassCard = (classItem: any) => {
+  const {
+    classItem: {
+      image,
+      link,
+      time,
+      title,
+      duration,
+      teacher,
+      description,
+      file
+    }
+  } = classItem;
+  const fetchTeacherName = async () => {
+    return await client.fetch(currentTeacherUserName(teacher._ref));
   };
-  const [classes, setClasses] = useState<Array<any>>();
 
-  useEffect(() => {
-    fetchClasses();
-  }, []);
+  const { data: currentTeacher, isFetched: isTeacherNameFetched } = useQuery(
+    'currentTeacher',
+    fetchTeacherName
+  );
 
-  //console.log(classes);
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardMedia component="img" alt="green iguana" height="140" image="" />
+      <Choose>
+        <Choose.When condition={isTeacherNameFetched}>
+          <CardHeader
+            avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" />}
+            title={isTeacherNameFetched ? currentTeacher.userName : ''}
+            subheader={dayjs(time).locale('pt-br').format('DD/MM/YYYY HH:mm')}
+          />
+        </Choose.When>
+        <Choose.Otherwise>
+          <Skeleton variant="circular" width={40} height={40} />
+        </Choose.Otherwise>
+      </Choose>
+      <CardMedia
+        component="img"
+        alt="green iguana"
+        height="140"
+        image={urlFor(image).url()}
+      />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          {description}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button size="small">
+          <a href={link}>Link da aula</a>
+        </Button>
+        <Button size="small">{/* <a href={}>Material de Apoio</a> */}</Button>
       </CardActions>
     </Card>
   );
-}
-export default ClassCard
+};
+export default ClassCard;
