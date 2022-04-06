@@ -11,11 +11,14 @@ import {
   Skeleton
 } from '@mui/material';
 import { client, urlFor } from '../../client';
-import { currentTeacherUserName, fileUrlQuery } from '../../utils';
+import { currentTeacherUserName, fileUrlQuery, KebabCase } from '../../utils';
 import { red } from '@mui/material/colors';
 import dayjs from 'dayjs';
 import { useQueries } from 'react-query';
 import { Choose } from 'react-extras';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const ClassCard = (classItem: any) => {
   const {
@@ -36,7 +39,10 @@ const ClassCard = (classItem: any) => {
 
   const { isFetched: isTeacherNameFetched, data: currentTeacher } = results[0];
   const { isFetched: isFileFetched, data: classFile } = results[1];
+
   const linkUrl = new URL(link).href;
+
+  const { push } = useRouter();
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -82,6 +88,28 @@ const ClassCard = (classItem: any) => {
           >
             Material de Apoio
           </a>
+        </Button>
+        {/* <Link
+          href={{
+            pathname: `/classes/`,
+            query: { id: _id, name: title }
+          }}
+        >
+          <ArrowForwardIosIcon />
+        </Link> */}
+        <Button
+          size="small"
+          onClick={() =>
+            push(
+              {
+                pathname: `/classes/${KebabCase(title)}`,
+                query: { id: _id, title: title }
+              },
+              `/classes/${KebabCase(title)}`
+            )
+          }
+        >
+          <ArrowForwardIosIcon />
         </Button>
       </CardActions>
     </Card>

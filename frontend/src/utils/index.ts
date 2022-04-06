@@ -5,3 +5,4 @@ export {
   fileUrlQuery,
   currentTeacherUserName
 } from './sanity-querys';
+export { KebabCase } from './acessory-functions';
