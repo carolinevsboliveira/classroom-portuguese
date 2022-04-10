@@ -23,7 +23,7 @@ const LoginForm = () => {
   const { loginWithPasswordAndEmail, signInWithGooglePopup } = useAuth();
 
   const redirectToUserPage = (id: string) => {
-    push(`/classes`);
+    push(`/classes-feed`);
   };
   const onSubmit = async () => {
     setIsSubmitting(true);

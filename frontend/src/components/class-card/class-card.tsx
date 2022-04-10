@@ -89,14 +89,6 @@ const ClassCard = (classItem: any) => {
             Material de Apoio
           </a>
         </Button>
-        {/* <Link
-          href={{
-            pathname: `/classes/`,
-            query: { id: _id, name: title }
-          }}
-        >
-          <ArrowForwardIosIcon />
-        </Link> */}
         <Button
           size="small"
           onClick={() =>

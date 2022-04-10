@@ -2,7 +2,9 @@ import React from 'react';
 import { Button, Snackbar, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 interface ToastProps {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen: React.Dispatch<
+    React.SetStateAction<{ state: boolean; message: string }>
+  >;
   open: boolean;
   message: string;
 }
@@ -15,7 +17,7 @@ export const Toast = ({ setOpen, open, message }: ToastProps) => {
       return;
     }
 
-    setOpen(false);
+    setOpen({ state: false, message: '' });
   };
 
   const action = (
