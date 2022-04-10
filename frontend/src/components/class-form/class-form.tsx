@@ -29,16 +29,18 @@ dayjs.extend(utc);
 
 function ClassForm() {
   const methods = useForm();
+  const { push } = useRouter();
+
   const { currentUser } = useAuth();
   const [imageAsset, setImageAsset] = useState<SanityImageAssetDocument>();
   const [fileAsset, setFileAsset] = useState<SanityAssetDocument>();
   const [teacherArrayList, setTeacherArrayList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ state: false, message: '' });
-  const { push } = useRouter();
   const fetchTeachers = async () => {
     setTeacherArrayList(await client.fetch(teachers));
   };
+
   useEffect(() => {
     if (!currentUser) {
       alert('Falha ao autenticar sua sessão.');
@@ -46,10 +48,10 @@ function ClassForm() {
     }
   }, [currentUser]);
 
-  console.log(currentUser);
   const uploadFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
-    const selectedFile = (e.currentTarget as HTMLInputElement).files[0];
+
+    const selectedFile = (e.currentTarget as HTMLInputElement)!.files[0];
     try {
       const document = await client.assets.upload('file', selectedFile, {
         contentType: selectedFile.type,
@@ -67,6 +69,7 @@ function ClassForm() {
       setIsLoading(false);
     }
   };
+
   const onSubmit = () => {
     if (currentUser) {
       setIsLoading(true);
@@ -139,7 +142,7 @@ function ClassForm() {
           <ControlledTextField
             name="subtitle"
             control={methods.control}
-            label="subtitle"
+            label="Subtítulo"
             required={REQUIRED_FIELD}
             type="text"
             multiline
