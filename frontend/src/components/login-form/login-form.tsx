@@ -11,14 +11,14 @@ import { translateFirebaseErrorMessages } from '../../helpers';
 import { Toast } from '../toast';
 import { BackdropWithLoader } from '../backdrop-with-loader';
 import { client } from '../../client';
+import { FirebaseErrorResponse } from '../../interface';
 
 const LoginForm = () => {
   const { handleSubmit, control, getValues } = useForm({
     shouldFocusError: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [firebaseError, setFirebaseError] = useState('');
-  const [openToast, setOpenToast] = useState(false);
+  const [error, setError] = useState({ state: false, message: '' });
   const { push } = useRouter();
   const { loginWithPasswordAndEmail, signInWithGooglePopup } = useAuth();
 
@@ -35,8 +35,10 @@ const LoginForm = () => {
       redirectToUserPage(data?.user.uid);
       setIsSubmitting(false);
     } catch (error) {
-      setOpenToast(true);
-      setFirebaseError(translateFirebaseErrorMessages(error));
+      setError({
+        state: true,
+        message: translateFirebaseErrorMessages(error as FirebaseErrorResponse)
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -56,8 +58,10 @@ const LoginForm = () => {
       redirectToUserPage(data?.user.uid);
       setIsSubmitting(false);
     } catch (error) {
-      setOpenToast(true);
-      setFirebaseError(translateFirebaseErrorMessages(error));
+      setError({
+        state: true,
+        message: translateFirebaseErrorMessages(error as FirebaseErrorResponse)
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -103,11 +107,7 @@ const LoginForm = () => {
             Entrar com o Google
           </Button>
         </form>
-        <Toast
-          message={firebaseError}
-          setOpen={setOpenToast}
-          open={openToast}
-        />
+        <Toast message={error.message} setOpen={setError} open={error.state} />
       </Box>
     </React.Fragment>
   );
