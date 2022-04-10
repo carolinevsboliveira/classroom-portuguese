@@ -8,7 +8,8 @@ const ControlledTextField = ({
   label,
   control,
   required,
-  type
+  type,
+  multiline
 }: ControlledTextFieldProps) => {
   return (
     <React.Fragment>
@@ -23,6 +24,7 @@ const ControlledTextField = ({
             onChange={onChange}
             error={!!error}
             helperText={error ? error.message : null}
+            multiline={multiline}
           />
         )}
         rules={{ required: required }}
