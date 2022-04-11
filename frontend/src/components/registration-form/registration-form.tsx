@@ -5,8 +5,9 @@ import Link from 'next/link';
 import { Box, Button, TextField } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 
+import { FirebaseErrorResponse } from '../../interface';
 import { useAuth } from '../../contexts';
-import { REQUIRED_FIELD } from '../../constants';
+import { REQUIRED_FIELD, DEFAULT_PROFILE_IMAGE } from '../../constants';
 import { translateFirebaseErrorMessages } from '../../helpers';
 import { Toast } from '../toast';
 
@@ -20,8 +21,7 @@ const RegistrationForm = () => {
     shouldFocusError: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [firebaseError, setFirebaseError] = useState('');
-  const [open, setOpen] = useState(false);
+  const [error, setError] = useState({ state: false, message: '' });
 
   const onSubmit = async () => {
     setIsSubmitting(true);
@@ -38,12 +38,15 @@ const RegistrationForm = () => {
         _id: uid,
         _type: 'user',
         userName: getValues().userName ? getValues().userName : '',
-        image: photoURL
+        image: photoURL || DEFAULT_PROFILE_IMAGE
       };
       client.createIfNotExists(doc).then(() => push('/classes'));
     } catch (error) {
       setIsSubmitting(false);
-      setFirebaseError(translateFirebaseErrorMessages(error));
+      setError({
+        message: translateFirebaseErrorMessages(error as FirebaseErrorResponse),
+        state: true
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -104,7 +107,7 @@ const RegistrationForm = () => {
           />
           <Button type="submit">Enviar</Button>
         </form>
-        <Toast message={firebaseError} setOpen={setOpen} open={open} />
+        <Toast message={error.message} setOpen={setError} open={error.state} />
         <Link href="/login">Já tem uma conta? Faça o login aqui o/</Link>
       </Box>
     </React.Fragment>

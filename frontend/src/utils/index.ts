@@ -3,6 +3,7 @@ export {
   teachers,
   classesQuery,
   fileUrlQuery,
-  currentTeacherUserName
+  currentTeacherUserName,
+  currentClass
 } from './sanity-querys';
 export { KebabCase } from './acessory-functions';

@@ -1,13 +1,15 @@
 import React from 'react';
-import { ClassCard, ClassList } from '../src/components';
-import { QueryClient, QueryClientProvider } from 'react-query';
-function ClassFeed() {
-  const queryClient = new QueryClient();
-  return (
-    <QueryClientProvider client={queryClient}>
-      <ClassList />
-    </QueryClientProvider>
-  );
-}
+import { ClassList } from '../src/components';
+import { useQuery } from 'react-query';
+import { client } from '../src/client';
+import { classesQuery } from '../src/utils';
+const ClassFeed = () => {
+  const fetchClasses = async () => {
+    return await client.fetch(classesQuery);
+  };
+
+  const { isLoading, data, isFetched } = useQuery('classes', fetchClasses);
+  return <ClassList isLoading={isLoading} data={data} isFetched={isFetched} />;
+};
 
 export default ClassFeed;

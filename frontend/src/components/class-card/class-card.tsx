@@ -18,7 +18,6 @@ import { useQueries } from 'react-query';
 import { Choose } from 'react-extras';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 
 const ClassCard = (classItem: any) => {
   const {
@@ -95,7 +94,11 @@ const ClassCard = (classItem: any) => {
             push(
               {
                 pathname: `/classes/${KebabCase(title)}`,
-                query: { id: _id, title: title }
+                query: {
+                  id: _id,
+                  title: title,
+                  fileUrl: classFile[0].file.asset.url ?? ''
+                }
               },
               `/classes/${KebabCase(title)}`
             )

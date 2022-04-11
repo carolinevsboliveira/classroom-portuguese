@@ -27,11 +27,10 @@ import { useAuth } from '../../contexts';
 
 dayjs.extend(utc);
 
-function ClassForm() {
+const ClassForm = ({ currentUser }: { currentUser: null }) => {
   const methods = useForm();
   const { push } = useRouter();
 
-  const { currentUser } = useAuth();
   const [imageAsset, setImageAsset] = useState<SanityImageAssetDocument>();
   const [fileAsset, setFileAsset] = useState<SanityAssetDocument>();
   const [teacherArrayList, setTeacherArrayList] = useState([]);
@@ -40,13 +39,6 @@ function ClassForm() {
   const fetchTeachers = async () => {
     setTeacherArrayList(await client.fetch(teachers));
   };
-
-  useEffect(() => {
-    if (!currentUser) {
-      alert('Falha ao autenticar sua sessão.');
-      push('/login');
-    }
-  }, [currentUser]);
 
   const uploadFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
@@ -116,9 +108,6 @@ function ClassForm() {
         setIsLoading(false);
         push('/success');
       });
-    } else {
-      setError({ message: 'Falha ao autenticar sua sessão.', state: true });
-      push('/login');
     }
   };
 
@@ -206,6 +195,6 @@ function ClassForm() {
       <Toast open={error.state} setOpen={setError} message={error.message} />
     </React.Fragment>
   );
-}
+};
 
 export default ClassForm;

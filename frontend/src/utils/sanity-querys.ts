@@ -12,3 +12,6 @@ export const fileUrlQuery = (classroomId: string) => {
       }
     }`;
 };
+
+export const currentClass = (id: string) =>
+  `*[_type == 'classroom' && _id == '${id}']`;
