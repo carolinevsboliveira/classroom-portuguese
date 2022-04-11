@@ -1,24 +1,14 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import { BackdropWithLoader, ClassForm, Toast } from '../src/components';
 import { useAuth } from '../src/contexts';
 import { useRouter } from 'next/router';
+import { useValidUser } from '../src/hooks';
 const Classes = () => {
   const { push } = useRouter();
   const [error, setError] = useState({ state: false, message: '' });
   const { currentUser } = useAuth();
 
-  useEffect(() => {
-    if (!currentUser) {
-      setError({
-        state: true,
-        message: 'Falha ao autenticar sua sessão. Faça o login novamente.'
-      });
-      setTimeout(() => {
-        push('./login');
-      }, 3000);
-    }
-  }, [currentUser]);
-
+  useValidUser({ currentUser, setError });
   return (
     <Fragment>
       <ClassForm currentUser={currentUser} />
