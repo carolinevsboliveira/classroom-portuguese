@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
 import React, { ElementType } from 'react';
 
-const withAuth = (WrappedComponent: ElementType) => {
+const WithAuth = (WrappedComponent: ElementType) => {
   return (props: any) => {
     if (typeof window !== 'undefined') {
-      const Router = useRouter();
+      const { replace } = useRouter();
 
       if (!localStorage.getItem('isLoggedUser')) {
-        Router.replace('/');
+        replace('/');
         return null;
       }
 
@@ -18,4 +18,4 @@ const withAuth = (WrappedComponent: ElementType) => {
   };
 };
 
-export default withAuth;
+export default WithAuth;
