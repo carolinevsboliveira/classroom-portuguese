@@ -21,7 +21,7 @@ import { useRouter } from 'next/router';
 
 const ClassCard = (classItem: any) => {
   const {
-    classItem: { image, link, time, title, duration, teacher, description, _id }
+    classItem: { image, link, time, title, duration, teacher, subtitle, _id }
   } = classItem;
   const fetchTeacherName = async () => {
     return await client.fetch(currentTeacherUserName(teacher._ref));
@@ -68,7 +68,7 @@ const ClassCard = (classItem: any) => {
           {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {description}
+          {subtitle}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Duração: {duration / 60} hora(s)

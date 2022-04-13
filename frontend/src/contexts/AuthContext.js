@@ -8,9 +8,11 @@ import {
   signInWithPopup,
   GoogleAuthProvider
 } from 'firebase/auth';
+import { treeItemClasses } from '@mui/lab';
 
 const AuthContext = createContext({
   currentUser: null,
+  isLoanding: true,
   registerAnAccount: (email, password) => any,
   loginWithPasswordAndEmail: (email, password) => any,
   logoutTheCurrentUser: () => any,

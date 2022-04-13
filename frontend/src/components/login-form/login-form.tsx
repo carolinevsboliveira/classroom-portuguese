@@ -22,8 +22,8 @@ const LoginForm = () => {
   const { push } = useRouter();
   const { loginWithPasswordAndEmail, signInWithGooglePopup } = useAuth();
 
-  const redirectToUserPage = (id: string) => {
-    push(`/classes-feed`);
+  const redirectToUserPage = () => {
+    push(`/classes`);
   };
   const onSubmit = async () => {
     setIsSubmitting(true);
@@ -32,7 +32,7 @@ const LoginForm = () => {
         getValues().email,
         getValues().password
       );
-      redirectToUserPage(data?.user.uid);
+      redirectToUserPage();
       setIsSubmitting(false);
     } catch (error) {
       setError({
@@ -55,7 +55,7 @@ const LoginForm = () => {
         image: data?.user.photoURL
       };
       client.createIfNotExists(doc).then(() => push('/classes'));
-      redirectToUserPage(data?.user.uid);
+      redirectToUserPage();
       setIsSubmitting(false);
     } catch (error) {
       setError({
