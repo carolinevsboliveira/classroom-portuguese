@@ -2,18 +2,11 @@ import React, { useState, Fragment, useEffect } from 'react';
 import { BackdropWithLoader, ClassForm, Toast } from '../src/components';
 import { useAuth } from '../src/contexts';
 import { useRouter } from 'next/router';
+import withAuth from '../src/hoc/withAuth';
 const Classes = () => {
   const [error, setError] = useState({ state: false, message: '' });
   const { currentUser, logoutTheCurrentUser } = useAuth();
   const { push } = useRouter();
-
-  useEffect(() => {
-    if (!currentUser) {
-      setError({ message: '...Carregando informações. Aguarde!', state: true });
-    } else {
-      setError({ message: '', state: false });
-    }
-  }, [currentUser]);
 
   const handleOnClick = () => {
     push('/login');
@@ -29,4 +22,4 @@ const Classes = () => {
   );
 };
 
-export default Classes;
+export default withAuth(Classes);

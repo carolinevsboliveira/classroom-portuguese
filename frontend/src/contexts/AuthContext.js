@@ -8,7 +8,6 @@ import {
   signInWithPopup,
   GoogleAuthProvider
 } from 'firebase/auth';
-import { treeItemClasses } from '@mui/lab';
 
 const AuthContext = createContext({
   currentUser: null,
@@ -43,7 +42,13 @@ export default function AuthContextProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user ? user : null);
+      if (user) {
+        setCurrentUser(user);
+        console.log(localStorage);
+        localStorage.setItem('isLoggedUser', JSON.stringify(true));
+      } else {
+        setCurrentUser(null);
+      }
     });
     return () => {
       unsubscribe();
