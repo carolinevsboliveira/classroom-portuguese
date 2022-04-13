@@ -1,8 +1,8 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import { BackdropWithLoader, ClassForm, Toast } from '../src/components';
-import { useAuth } from '../src/contexts';
+import { BackdropWithLoader, ClassForm, Toast } from '../../src/components';
+import { useAuth } from '../../src/contexts';
 import { useRouter } from 'next/router';
-import withAuth from '../src/hoc/withAuth';
+import { WithAuth } from '../../src/hoc';
 const Classes = () => {
   const [error, setError] = useState({ state: false, message: '' });
   const { currentUser, logoutTheCurrentUser } = useAuth();
@@ -22,4 +22,4 @@ const Classes = () => {
   );
 };
 
-export default withAuth(Classes);
+export default WithAuth(Classes);
