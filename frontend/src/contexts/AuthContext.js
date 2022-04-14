@@ -44,7 +44,6 @@ export default function AuthContextProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user);
-        console.log(localStorage);
         localStorage.setItem('isLoggedUser', JSON.stringify(true));
       } else {
         setCurrentUser(null);

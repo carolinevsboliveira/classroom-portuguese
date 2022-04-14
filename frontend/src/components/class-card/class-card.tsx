@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   Card,
   Button,
@@ -110,4 +110,4 @@ const ClassCard = (classItem: any) => {
     </Card>
   );
 };
-export default ClassCard;
+export default memo(ClassCard);
