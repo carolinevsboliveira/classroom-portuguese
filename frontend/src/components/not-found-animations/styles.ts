@@ -8,3 +8,5 @@ const CenteredBox = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export { CenteredBox };

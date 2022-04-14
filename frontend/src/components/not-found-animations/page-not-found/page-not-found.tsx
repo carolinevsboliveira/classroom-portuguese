@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import Lottie from 'react-lottie';
-import { CenteredBox } from '../success-animation/styles';
-import * as AnimationData from '../../assets/animations/not_found_animation.json';
+import { CenteredBox } from '../styles';
+import * as AnimationData from '../../../assets/animations/not_found_animation.json';
 import { Button } from '@mui/material';
 
 const defaultOptions = {
