@@ -21,8 +21,29 @@ import { useRouter } from 'next/router';
 
 const ClassCard = (classItem: any) => {
   const {
-    classItem: { image, link, time, title, duration, teacher, subtitle, _id }
+    classItem: {
+      image,
+      link,
+      time,
+      title,
+      key,
+      duration,
+      teacher,
+      subtitle,
+      _id
+    }
   } = classItem;
+  const handleClassDetailsOnClick = () => {
+    push(
+      {
+        pathname: `/classes/${key}`,
+        query: {
+          key: key
+        }
+      },
+      `/classes/${key}`
+    );
+  };
   const fetchTeacherName = async () => {
     return await client.fetch(currentTeacherUserName(teacher._ref));
   };
@@ -88,22 +109,7 @@ const ClassCard = (classItem: any) => {
             Material de Apoio
           </a>
         </Button>
-        <Button
-          size="small"
-          onClick={() =>
-            push(
-              {
-                pathname: `/classes/${KebabCase(title)}`,
-                query: {
-                  id: _id,
-                  title: title,
-                  fileUrl: classFile[0].file.asset.url ?? ''
-                }
-              },
-              `/classes/${KebabCase(title)}`
-            )
-          }
-        >
+        <Button size="small" onClick={() => handleClassDetailsOnClick()}>
           <ArrowForwardIosIcon />
         </Button>
       </CardActions>
