@@ -14,16 +14,11 @@ import {
 import { Choose } from 'react-extras';
 
 const fetchCurrentClass = async (classId: string) => {
-  console.log(
-    '🚀 ~ file: [key].tsx ~ line 17 ~ fetchCurrentClass ~ classId',
-    classId
-  );
   //TODO: validate to send the request when classId size is valid
   return await client.fetch(currentClass(classId));
 };
 export const ClassesDetails = () => {
   const { query, isReady } = useRouter();
-  const { currentUser } = useAuth();
   const [error, setError] = useState({ state: false, message: '' });
   const [isReadyToFetch, setIsReadyToFetch] = useState(false);
 
