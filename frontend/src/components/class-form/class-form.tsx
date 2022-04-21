@@ -20,10 +20,9 @@ import { FileInput } from './styles';
 
 import { client } from '../../client';
 import { teachers } from '../../utils';
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/router';
 import { FileCopy } from '@mui/icons-material';
-import { useAuth } from '../../contexts';
 
 dayjs.extend(utc);
 
@@ -77,7 +76,7 @@ const ClassForm = ({ currentUser }: { currentUser: null }) => {
 
       const doc = {
         _type: 'classroom',
-        _id: uuid(),
+        key: uuidv4(),
         title,
         link,
         duration: Number(duration),
