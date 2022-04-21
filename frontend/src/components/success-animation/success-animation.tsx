@@ -22,7 +22,7 @@ const SucessAnimation = () => {
           <Button onClick={() => back()} variant="contained">
             Cadastrar nova aula
           </Button>
-          <Button onClick={() => push('/')} variant="outlined">
+          <Button onClick={() => push('/classes')} variant="outlined">
             Listagem das aulas
           </Button>
           <Button onClick={() => push('/')} variant="outlined">
